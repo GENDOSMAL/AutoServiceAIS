@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/api/test")
+@RequestMapping("/api/support/")
 public class TestController 
 {
-	@GetMapping
+	@GetMapping("test")
 	public ResponseEntity test(){
 		return ResponseEntity.ok(LocalDateTime.now());
 	}
