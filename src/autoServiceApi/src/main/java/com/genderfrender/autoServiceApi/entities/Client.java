@@ -46,7 +46,7 @@ public class Client
 	
 	@Column(name = "auto_number")
 	private String AutoNumber;
-
+	
 	public Long getId()
 	{
 		return id;

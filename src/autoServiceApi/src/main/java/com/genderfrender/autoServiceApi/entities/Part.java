@@ -36,4 +36,70 @@ public class Part
 
 	@Column(name = "last_edit_date")
 	private LocalDateTime lastEditDate;
+
+	public long getId()
+	{
+		return Id;
+	}
+
+	public void setId(long id)
+	{
+		Id = id;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public int getCount()
+	{
+		return count;
+	}
+
+	public void setCount(int count)
+	{
+		this.count = count;
+	}
+
+	public float getPrice()
+	{
+		return price;
+	}
+
+	public void setPrice(float price)
+	{
+		this.price = price;
+	}
+
+	public float getUserPrice()
+	{
+		return userPrice;
+	}
+
+	public void setUserPrice(float userPrice)
+	{
+		this.userPrice = userPrice;
+	}
+
+	public LocalDateTime getDateOfAdd()
+	{
+		return dateOfAdd;
+	}
+
+	public void setDateOfAdd(LocalDateTime dateOfAdd)
+	{
+		this.dateOfAdd = dateOfAdd;
+	}
+	
+	
+	public void setLastEditDate(LocalDateTime lastEditDate)
+	{
+		this.lastEditDate = lastEditDate;
+	}
 }
