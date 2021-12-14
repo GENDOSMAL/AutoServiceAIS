@@ -19,7 +19,7 @@ public class OrderPartId implements Serializable
 	private long orderId;
 
 	@Column(name = "part_id")
-	private long serviceId;
+	private long partId;
 
 	@Override
 	public boolean equals(Object o)
@@ -27,12 +27,32 @@ public class OrderPartId implements Serializable
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		OrderPartId that = (OrderPartId) o;
-		return orderId == that.orderId && serviceId == that.serviceId;
+		return orderId == that.orderId && partId == that.partId;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(orderId, serviceId);
+		return Objects.hash(orderId, partId);
+	}
+
+	public long getOrderId()
+	{
+		return orderId;
+	}
+
+	public void setOrderId(long orderId)
+	{
+		this.orderId = orderId;
+	}
+
+	public long getPartId()
+	{
+		return partId;
+	}
+
+	public void setPartId(long partId)
+	{
+		this.partId = partId;
 	}
 }

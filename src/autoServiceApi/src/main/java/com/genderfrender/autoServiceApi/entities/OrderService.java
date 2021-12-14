@@ -17,12 +17,14 @@ public class OrderService
 	@EmbeddedId
 	private OrderServiceId id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("service_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@MapsId("serviceId")
+	@JoinColumn(name = "service_id")
 	private Service service;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("order_Id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@MapsId("orderId")
+	@JoinColumn(name = "order_id")
 	private Order order;
 	
 	@Column(name = "count_of_use", nullable = false)

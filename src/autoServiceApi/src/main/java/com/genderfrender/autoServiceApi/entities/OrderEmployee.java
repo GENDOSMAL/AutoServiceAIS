@@ -18,11 +18,13 @@ public class OrderEmployee
 	private OrderEmployeeId id;
 
 	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
-	@MapsId("employee_id")
+	@MapsId("employeeId")
+	@JoinColumn(name = "employee_id")
 	private Employee employee;
 
 	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
-	@MapsId("order_Id")
+	@MapsId("orderId")
+	@JoinColumn(name = "order_id")
 	private Order order;
 
 	@Column(name = "count_of_hour", nullable = false)

@@ -35,4 +35,24 @@ public class OrderServiceId implements Serializable
 	{
 		return Objects.hash(orderId, serviceId);
 	}
+
+	public long getOrderId()
+	{
+		return orderId;
+	}
+
+	public void setOrderId(long orderId)
+	{
+		this.orderId = orderId;
+	}
+
+	public long getServiceId()
+	{
+		return serviceId;
+	}
+
+	public void setServiceId(long serviceId)
+	{
+		this.serviceId = serviceId;
+	}
 }

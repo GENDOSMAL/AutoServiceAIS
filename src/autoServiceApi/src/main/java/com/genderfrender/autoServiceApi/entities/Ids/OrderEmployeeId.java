@@ -19,7 +19,7 @@ public class OrderEmployeeId implements Serializable
 	private long orderId;
 
 	@Column(name = "employee_id")
-	private long serviceId;
+	private long employeeId;
 
 	@Override
 	public boolean equals(Object o)
@@ -27,12 +27,32 @@ public class OrderEmployeeId implements Serializable
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		OrderEmployeeId that = (OrderEmployeeId) o;
-		return orderId == that.orderId && serviceId == that.serviceId;
+		return orderId == that.orderId && employeeId == that.employeeId;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(orderId, serviceId);
+		return Objects.hash(orderId, employeeId);
+	}
+
+	public long getOrderId()
+	{
+		return orderId;
+	}
+
+	public void setOrderId(long orderId)
+	{
+		this.orderId = orderId;
+	}
+
+	public long getEmployeeId()
+	{
+		return employeeId;
+	}
+
+	public void setEmployeeId(long employeeId)
+	{
+		this.employeeId = employeeId;
 	}
 }
