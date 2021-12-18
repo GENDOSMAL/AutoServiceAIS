@@ -1,0 +1,62 @@
+﻿@page "/about"
+
+
+<MudTable Items="@_elements" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>О чём</MudTh>
+        <MudTh>Что</MudTh>
+    </HeaderContent>
+
+    <RowTemplate>
+        <MudTd DataLabel="О чём">@context.Type</MudTd>
+        <MudTd DataLabel="Что">@context.Value</MudTd>
+    </RowTemplate>
+</MudTable>
+
+
+@code {
+    public class AboutData
+    {
+        public string Type { get; set; }
+        public string Value { get; set; }
+    }
+
+    private bool _loading;
+
+    private List<AboutData>
+    _elements;
+
+    /// <inheritdoc />
+    protected override void OnInitialized()
+    {
+        _elements = new List<AboutData>
+        {
+            new()
+            {
+                Type = "Автор",
+                Value = "Малкеров Геннадий Александрович"
+            },
+            new()
+            {
+                Type = "Группа",
+                Value = "ЗБ-ПИ19-2"
+            },
+            new()
+            {
+                Type = "Тема",
+                Value = "Информационно-справочная система автосервиса"
+            },
+            new()
+            {
+                Type = "Клиент",
+                Value = "Blazor (MudBlazor) and C#"
+            },
+            new()
+            {
+                Type = "Сервер",
+                Value = "Java 17, Spring"
+            }
+        };
+    }
+
+}

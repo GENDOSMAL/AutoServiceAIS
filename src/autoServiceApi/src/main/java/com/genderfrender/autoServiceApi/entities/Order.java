@@ -1,10 +1,17 @@
 package com.genderfrender.autoServiceApi.entities;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.genderfrender.autoServiceApi.dto.PartForUser;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -42,14 +49,20 @@ public class Order
 	@JoinColumn(name = "client_id")
 	private Client client;
 
-	@OneToMany(mappedBy = "employee")
-	private Set<OrderEmployee> employer = new HashSet<>();
-
-	@OneToMany(mappedBy = "part")
+	@JsonIgnore
+	@OneToMany(mappedBy = "order",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private Set<OrderEmployee> employer = new HashSet<OrderEmployee>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
 	private Set<OrderPart> parts = new HashSet<>();
 
-	@OneToMany(mappedBy = "service")
-	private Set<OrderService> services = new HashSet<>();
+	@Transient
+	private List<PartForUser> partsUser;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "order",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private Set<OrderService> services = new HashSet<OrderService>();
 
 	public long getId()
 	{
@@ -154,5 +167,35 @@ public class Order
 	public void setServices(Set<OrderService> services)
 	{
 		this.services = services;
+	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Order order = (Order) o;
+		return true;
+		//return Id == order.Id && Float.compare(order.endPrice, endPrice) == 0 && Objects.equals(registrationDate, order.registrationDate) && Objects.equals(preferEndDate, order.preferEndDate) && Objects.equals(dateOfCreate, order.dateOfCreate) && Objects.equals(lastEditDate, order.lastEditDate) && Objects.equals(codeName, order.codeName) && Objects.equals(client, order.client) && Objects.equals(employer, order.employer) && Objects.equals(parts, order.parts) && Objects.equals(services, order.services);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(Id, registrationDate, preferEndDate, endPrice, dateOfCreate, lastEditDate, codeName, client, employer, parts, services);
+	}
+	public LocalDateTime getLastEditDate()
+	{
+		return lastEditDate;
+	}
+
+	public List<PartForUser> getPartsUser()
+	{
+		return partsUser;
+	}
+
+	public void setPartsUser(List<PartForUser> partsUser)
+	{
+		this.partsUser = partsUser;
 	}
 }

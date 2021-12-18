@@ -10,19 +10,18 @@ import javax.persistence.*;
 @Table(name = "order_services")
 @Getter
 @Setter
-@ToString
 @Entity
 public class OrderService
 {
 	@EmbeddedId
 	private OrderServiceId id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("serviceId")
 	@JoinColumn(name = "service_id")
 	private Service service;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("orderId")
 	@JoinColumn(name = "order_id")
 	private Order order;

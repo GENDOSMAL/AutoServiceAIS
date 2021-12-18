@@ -1,8 +1,10 @@
 package com.genderfrender.autoServiceApi.controllers;
 
 import com.genderfrender.autoServiceApi.dto.BaseDto;
+import com.genderfrender.autoServiceApi.dto.PartForUser;
 import com.genderfrender.autoServiceApi.entities.Order;
 import com.genderfrender.autoServiceApi.repository.IOrderRepository;
+import com.genderfrender.autoServiceApi.repository.IPartRepository;
 import com.genderfrender.autoServiceApi.utils.StringExtension;
 import lombok.experimental.ExtensionMethod;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,18 +21,32 @@ import java.util.List;
 public class OrderController
 {
 	private final IOrderRepository _orderRepository;
+	private final IPartRepository _partRepository;
 
-	public OrderController(IOrderRepository clientRepository)
+	public OrderController(IOrderRepository clientRepository, IPartRepository partRepository)
 	{
 		_orderRepository = clientRepository;
+		_partRepository = partRepository;
 	}
 
 	@GetMapping("all")
-	public ResponseEntity<BaseDto<List<Order>>> getAllClient()
+	public ResponseEntity<BaseDto<List<Order>>> getAll()
 	{
 		try
 		{
-			return new ResponseEntity<>(BaseDto.generateNormal(_orderRepository.findAll()), HttpStatus.OK);
+			var res=_orderRepository.findAll();
+			for (var data:res)
+			{
+				//if(!data.getParts().isEmpty())
+				//{
+					data.setPartsUser(new ArrayList<PartForUser>());
+					for (var part:data.getParts())
+					{
+						data.getPartsUser().add(new PartForUser(part.getPart(),part.getCountOfUse()));
+					}
+				//}					
+			}
+			return new ResponseEntity<>(BaseDto.generateNormal(res), HttpStatus.OK);
 		} catch (Exception ex)
 		{
 			return new ResponseEntity<>(BaseDto.generateWithStatus(HttpStatus.BAD_REQUEST, ex.toString()), HttpStatus.BAD_REQUEST);
@@ -37,13 +54,13 @@ public class OrderController
 	}
 
 	@PostMapping("new")
-	public ResponseEntity<BaseDto<Long>> saveNewClient(@RequestBody Order client)
+	public ResponseEntity<BaseDto<Long>> saveNew(@RequestBody Order order)
 	{
 		try
 		{
-			client.setId(0L);
-			_orderRepository.save(client);
-			var newClientId = client.getId();
+			_orderRepository.save(order);
+			
+			var newClientId = order.getId();
 			return new ResponseEntity<>(BaseDto.generateNormal(newClientId), HttpStatus.OK);
 		} catch (Exception ex)
 		{
@@ -73,6 +90,10 @@ public class OrderController
 			existObject.setEmployer(newInfo.getEmployer());
 			existObject.setParts(newInfo.getParts());
 			existObject.setServices(newInfo.getServices());
+			/*var orderPare=new OrderPart();
+			orderPare.setPart(_partRepository.getById(1L));
+			orderPare.setCountOfUse(5);
+			existObject.getParts().add(orderPare);*/
 			_orderRepository.save(existObject);
 			return new ResponseEntity<>(BaseDto.generateNormal(true), HttpStatus.OK);
 		} catch (Exception ex)

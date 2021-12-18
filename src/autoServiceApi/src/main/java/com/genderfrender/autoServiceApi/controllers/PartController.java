@@ -25,7 +25,7 @@ public class PartController
 	}
 
 	@GetMapping("all")
-	public ResponseEntity<BaseDto<List<Part>>> getAllClient()
+	public ResponseEntity<BaseDto<List<Part>>> getAll()
 	{
 		try
 		{
@@ -37,13 +37,13 @@ public class PartController
 	}
 
 	@PostMapping("new")
-	public ResponseEntity<BaseDto<Long>> saveNewClient(@RequestBody Part client)
+	public ResponseEntity<BaseDto<Long>> saveNew(@RequestBody Part part)
 	{
 		try
 		{
-			client.setId(0L);
-			_partRepository.save(client);
-			var newClientId = client.getId();
+			part.setId(0L);
+			_partRepository.save(part);
+			var newClientId = part.getId();
 			return new ResponseEntity<>(BaseDto.generateNormal(newClientId), HttpStatus.OK);
 		} catch (Exception ex)
 		{
@@ -52,7 +52,7 @@ public class PartController
 	}
 	
 	@PostMapping("edit/{id}")
-	public ResponseEntity<BaseDto<Boolean>> update(@RequestBody Part newClientInfo, @PathVariable(value = "id") long id)
+	public ResponseEntity<BaseDto<Boolean>> update(@RequestBody Part updateInfo, @PathVariable(value = "id") long id)
 	{
 		try
 		{
@@ -61,11 +61,11 @@ public class PartController
 				return new ResponseEntity<>(BaseDto.generateNormal(false), HttpStatus.BAD_REQUEST);
 
 			var existObject = existItem.get();
-			existObject.setName(newClientInfo.getName());
-			existObject.setCount(newClientInfo.getCount());
-			existObject.setPrice(newClientInfo.getPrice());
-			existObject.setUserPrice(newClientInfo.getUserPrice());
-			existObject.setDateOfAdd(newClientInfo.getDateOfAdd());
+			existObject.setName(updateInfo.getName());
+			existObject.setCount(updateInfo.getCount());
+			existObject.setPrice(updateInfo.getPrice());
+			existObject.setUserPrice(updateInfo.getUserPrice());
+			existObject.setDateOfAdd(updateInfo.getDateOfAdd());
 			existObject.setLastEditDate(LocalDateTime.now());
 			_partRepository.save(existObject);
 			return new ResponseEntity<>(BaseDto.generateNormal(true), HttpStatus.OK);
