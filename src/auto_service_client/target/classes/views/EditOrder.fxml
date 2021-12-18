@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="autoService.controller.EditOrderController">
+    <children>
+        <VBox layoutX="52.0" layoutY="58.0" prefHeight="400.0" prefWidth="360.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="56.0" prefWidth="660.0" text="Изменение договора" />
+            <Label fx:id="service" prefHeight="31.0" prefWidth="360.0" />
+                <Label alignment="CENTER" prefHeight="18.0" prefWidth="385.0" text="Информация о клиенте" />
+                <TextField fx:id="phoneNumber" disable="true" prefHeight="42.0" prefWidth="360.0" promptText="79805674433" />
+                <TextField fx:id="name" disable="true" layoutX="10.0" layoutY="137.0" prefHeight="42.0" prefWidth="360.0" promptText="Имя" />
+                <TextField fx:id="secondName" disable="true" layoutX="10.0" layoutY="180.0" prefHeight="42.0" prefWidth="360.0" promptText="Фамилия" />
+                <TextField fx:id="patr" disable="true" layoutX="10.0" layoutY="222.0" prefHeight="42.0" prefWidth="360.0" promptText="Отчество" />
+                <Label alignment="CENTER" prefHeight="18.0" prefWidth="367.0" text="Дата и время" />
+            <Label fx:id="date" prefHeight="30.0" prefWidth="360.0" />
+            <ComboBox prefHeight="26.0" prefWidth="416.0" promptText="статус" fx:id="status" />
+            <Label alignment="CENTER" layoutX="10.0" layoutY="285.0" prefHeight="18.0" prefWidth="367.0" text="Цена" />
+            <TextField fx:id="price" alignment="CENTER" promptText="1000" />
+                <Button mnemonicParsing="false" onAction="#change" prefHeight="51.0" prefWidth="360.0" text="ИЗМЕНИТЬ" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
