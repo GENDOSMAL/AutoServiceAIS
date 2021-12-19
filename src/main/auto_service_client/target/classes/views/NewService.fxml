@@ -13,7 +13,7 @@
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin></TextField>
-            <TextField fx:id="type" layoutX="10.0" layoutY="137.0" prefHeight="42.0" prefWidth="360.0" promptText="Тип">
+            <TextField fx:id="type" layoutX="10.0" layoutY="137.0" prefHeight="42.0" prefWidth="360.0" promptText="Название">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin></TextField>
