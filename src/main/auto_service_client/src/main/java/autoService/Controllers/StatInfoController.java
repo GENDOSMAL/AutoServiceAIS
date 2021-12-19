@@ -1,7 +1,7 @@
-package autoService.controller;
+package autoService.Controllers;
 
 import autoService.Main;
-import autoService.utils.Connection;
+import autoService.Support.ServerRequestIOperator;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -12,13 +12,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class StatController
+public class StatInfoController
 {
 	CategoryAxis xAxis = new CategoryAxis();
 	NumberAxis yAxis = new NumberAxis();
@@ -61,7 +60,7 @@ public class StatController
 
 	private XYChart.Series<String, Integer> loadSections()
 	{
-		JSONArray data = Connection.getJsonOrders();
+		JSONArray data = ServerRequestIOperator.getJsonOrders();
 		HashMap<String, Integer> map = new HashMap<>();
 		if (data == null)
 		{
@@ -94,7 +93,7 @@ public class StatController
 
 	private XYChart.Series<String, Integer> loadProfit()
 	{
-		JSONArray data = Connection.getJsonOrders();
+		JSONArray data = ServerRequestIOperator.getJsonOrders();
 		HashMap<Integer, Integer> map = new HashMap<>();
 		if (data == null)
 			return null;

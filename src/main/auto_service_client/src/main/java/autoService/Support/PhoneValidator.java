@@ -1,4 +1,4 @@
-package autoService.utils;
+package autoService.Support;
 
 public class PhoneValidator {
     public static boolean isNormal(String number){

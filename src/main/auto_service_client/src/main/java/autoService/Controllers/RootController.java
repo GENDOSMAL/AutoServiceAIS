@@ -1,9 +1,9 @@
-package autoService.controller;
+package autoService.Controllers;
 
 
 import autoService.Main;
-import autoService.utils.Connection;
-import autoService.utils.OrderStr;
+import autoService.Support.ServerRequestIOperator;
+import autoService.Support.OrderStr;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -60,7 +60,7 @@ public class RootController {
     }
 
     public void load() {
-        orderData  = Connection.getOrders();
+        orderData  = ServerRequestIOperator.getOrders();
         stage.show();
         if(orderData == null){
             showAlert("Ошибка на сервере","Не удалось загрузить заказы");
@@ -107,7 +107,7 @@ public class RootController {
             OrderStr order = this.orderTable.getSelectionModel().getSelectedItem();
             if (option.get() == ButtonType.OK){
                 try{
-                    Connection.deleteOrder(order.getId());
+                    ServerRequestIOperator.deleteOrder(order.getId());
                     Alert a = new Alert(Alert.AlertType.INFORMATION);
                     a.initOwner(main.getPrimaryStage());
                     a.setHeaderText("Успешно!");

@@ -1,9 +1,9 @@
-package autoService.controller;
+package autoService.Controllers;
 
 import autoService.Main;
-import autoService.utils.Connection;
-import autoService.utils.PhoneValidator;
-import autoService.utils.ServiceStr;
+import autoService.Support.ServerRequestIOperator;
+import autoService.Support.PhoneValidator;
+import autoService.Support.ServiceStr;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -61,8 +61,8 @@ public class NewOrderController
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.initModality(Modality.APPLICATION_MODAL);
 		alert.initOwner(main.getPrimaryStage());
-		services = (ObservableList<ServiceStr>) Connection.getServices(true);
-		jsonServices = (JSONArray) Connection.getServices(false);
+		services = (ObservableList<ServiceStr>) ServerRequestIOperator.getServices(true);
+		jsonServices = (JSONArray) ServerRequestIOperator.getServices(false);
 		if (services == null)
 		{
 			alert.setHeaderText("Ошибка на сервере");
@@ -106,7 +106,7 @@ public class NewOrderController
 		{
 			if (!phoneNumber.getText().equals("") && PhoneValidator.isNormal(phoneNumber.getText()))
 			{
-				JSONObject client = Connection.getClientByPhone(phoneNumber.getText());
+				JSONObject client = ServerRequestIOperator.getClientByPhone(phoneNumber.getText());
 				if (client != null)
 				{
 					if (client.length() != 0)
@@ -176,7 +176,7 @@ public class NewOrderController
 												c.put("secondName", secondName.getText());
 												c.put("patronymic", patr.getText());
 												c.put("phoneNumber", phoneNumber.getText());
-												String res = Connection.postClient(c);
+												String res = ServerRequestIOperator.postClient(c);
 												if (res.equals(""))
 												{
 													throw new IOException();
@@ -195,7 +195,7 @@ public class NewOrderController
 												}
 											}
 
-											if (!Connection.postOrder(j))
+											if (!ServerRequestIOperator.postOrder(j))
 											{
 												throw new IOException();
 											} else
@@ -254,7 +254,7 @@ public class NewOrderController
 	{
 		if (!phoneNumber.getText().equals("") && PhoneValidator.isNormal(phoneNumber.getText()))
 		{
-			JSONObject client = Connection.getClientByPhone(phoneNumber.getText());
+			JSONObject client = ServerRequestIOperator.getClientByPhone(phoneNumber.getText());
 			if (client == null)
 				return;
 			if (client.length() == 0)
@@ -317,7 +317,7 @@ public class NewOrderController
 				}
 			}
 			ObservableList<Integer> times =
-					Connection.getTimes(picker.getValue(), duration);
+					ServerRequestIOperator.getTimes(picker.getValue(), duration);
 			if (times == null)
 			{
 				alert.setHeaderText("Нет соединения с сервером");

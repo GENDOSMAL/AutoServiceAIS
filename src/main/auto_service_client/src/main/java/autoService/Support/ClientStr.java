@@ -1,6 +1,5 @@
-package autoService.utils;
+package autoService.Support;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class ClientStr {

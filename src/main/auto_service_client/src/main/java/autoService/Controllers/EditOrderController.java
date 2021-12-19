@@ -1,8 +1,8 @@
-package autoService.controller;
+package autoService.Controllers;
 
 import autoService.Main;
-import autoService.utils.Connection;
-import autoService.utils.OrderStr;
+import autoService.Support.ServerRequestIOperator;
+import autoService.Support.OrderStr;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -85,7 +85,7 @@ public class EditOrderController {
                    jsonObject.put("client",this.root.getOrderTable().getSelectionModel().getSelectedItem().getClient());
                    jsonObject.put("service",this.root.getOrderTable().getSelectionModel().getSelectedItem().getService());
                    try{
-                       Connection.changeOrder(this.root.getOrderTable().getSelectionModel().getSelectedItem().getId(),jsonObject);
+                       ServerRequestIOperator.changeOrder(this.root.getOrderTable().getSelectionModel().getSelectedItem().getId(),jsonObject);
                        this.stage.close();
                        this.root.load();
                    }

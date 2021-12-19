@@ -1,7 +1,7 @@
-package autoService.controller;
+package autoService.Controllers;
 
 import autoService.Main;
-import autoService.utils.Connection;
+import autoService.Support.ServerRequestIOperator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -20,8 +20,6 @@ public class NewServiceController
 	@FXML
 	public TextField type;
 
-	@FXML
-	public TextField length;
 
 	private Main main;
 	private Stage stage;
@@ -53,24 +51,12 @@ public class NewServiceController
 				showAlert("Ошибка заполнения данных", "В поле тип сервиса должно быть заполнено не пустыми данными");
 				return;
 			}
-
-			if (length.getText().equals(""))
-			{
-				showAlert("Ошибка заполнения данных", "В поле длительность  должно быть заполнено не пустыми данными целочисленного типа!");
-				return;
-			}
-
-			var lengthInt = parseInt(length.getText());
-			if (lengthInt.isEmpty())
-			{
-				showAlert("Ошибка заполнения данных", "В поле длительность  должно быть заполнено не пустыми данными целочисленного типа!");
-				return;
-			}
+				
 			var serviceJsonObject = new JSONObject();
-			serviceJsonObject.put("duration", lengthInt.get());
+			serviceJsonObject.put("duration", 1);
 			serviceJsonObject.put("type", type.getText());
 			serviceJsonObject.put("category", serviceName.getText());
-			var res = Connection.postService(serviceJsonObject);
+			var res = ServerRequestIOperator.postService(serviceJsonObject);
 			if (res.equals(""))
 			{
 				throw new IOException();

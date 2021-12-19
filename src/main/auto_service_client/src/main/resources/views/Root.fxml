@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="673.0" prefWidth="1512.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="autoService.controller.RootController">
+<BorderPane prefHeight="673.0" prefWidth="1512.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="autoService.Controllers.RootController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -20,7 +20,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Статистика">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#getStat" text="Статистика общая" />
+                        <MenuItem mnemonicParsing="false" onAction="#getStat" text="Общая" />
                     </items>
                 </Menu>
             <Menu mnemonicParsing="false" text="Дополнительно">

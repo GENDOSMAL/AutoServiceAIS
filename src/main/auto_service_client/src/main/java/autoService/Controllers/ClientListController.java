@@ -1,8 +1,8 @@
-package autoService.controller;
+package autoService.Controllers;
 
 import autoService.Main;
-import autoService.utils.ClientStr;
-import autoService.utils.Connection;
+import autoService.Support.ClientStr;
+import autoService.Support.ServerRequestIOperator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -16,7 +16,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-public class ClientController {
+public class ClientListController
+{
 
     @FXML private TableColumn<ClientStr, String> firstName;
     @FXML private TableColumn<ClientStr, String>  secondName;
@@ -49,7 +50,7 @@ public class ClientController {
 
     }
     public void load() {
-        clientData  = Connection.getClients();
+        clientData  = ServerRequestIOperator.getClients();
         if(clientData == null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initModality(Modality.APPLICATION_MODAL);

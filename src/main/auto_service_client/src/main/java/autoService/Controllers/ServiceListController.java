@@ -1,8 +1,8 @@
-package autoService.controller;
+package autoService.Controllers;
 
 import autoService.Main;
-import autoService.utils.Connection;
-import autoService.utils.ServiceStr;
+import autoService.Support.ServerRequestIOperator;
+import autoService.Support.ServiceStr;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -12,12 +12,12 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ServiceController {
+public class ServiceListController
+{
     @FXML private TextField textField;
     @FXML private TableView<ServiceStr> serviceTable;
     @FXML private TableColumn<ServiceStr, String> service;
     @FXML private TableColumn<ServiceStr, String> category;
-    @FXML private TableColumn<ServiceStr, Integer> duration;
     private ObservableList<ServiceStr> serviceData = FXCollections.observableArrayList();
     private FilteredList<ServiceStr> filteredData = new FilteredList<>(serviceData );
     private SortedList<ServiceStr> sortableData = new SortedList<>(filteredData);
@@ -31,7 +31,6 @@ public class ServiceController {
     void initialize(){
         service.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
         category.setCellValueFactory(cellData -> cellData.getValue().categoryProperty());
-        duration.setCellValueFactory(cellData -> cellData.getValue().durationProperty().asObject());
         textField.textProperty().addListener((observable, oldValue, newValue) ->
                 filteredData.setPredicate(p -> p.getCategory().toLowerCase().contains(textField.getText().toLowerCase()) |
                         p.getType().toLowerCase().contains(textField.getText().toLowerCase() )
@@ -40,7 +39,7 @@ public class ServiceController {
     }
 
     public void load() {
-        serviceData  = (ObservableList<ServiceStr>) Connection.getServices(true);
+        serviceData  = (ObservableList<ServiceStr>) ServerRequestIOperator.getServices(true);
         if(serviceData == null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initModality(Modality.APPLICATION_MODAL);

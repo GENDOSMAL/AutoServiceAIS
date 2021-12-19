@@ -1,4 +1,4 @@
-package autoService.utils;
+package autoService.Support;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Connection
+public class ServerRequestIOperator
 {
 	public static String baseUrl = "http://localhost:8080/auto_service/";
 
@@ -146,12 +146,9 @@ public class Connection
 								jsonArray.getJSONObject(i).getJSONObject("service")
 						));
 					}
-
 				}
-
 			}
 			return orderData;
-
 		}
 		return null;
 	}
@@ -194,7 +191,6 @@ public class Connection
 			return times;
 		}
 		return null;
-
 	}
 
 	public static String postClient(JSONObject client) throws IOException
