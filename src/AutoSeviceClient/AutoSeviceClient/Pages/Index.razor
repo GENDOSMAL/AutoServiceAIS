@@ -5,3 +5,12 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+<MudDatePicker Label="Start Date" @bind-Date="@StartDate" />
+<MudTextField Label="SelectedDate" @bind-Value="@StartDate" />
+<MudText Typo="Typo.h3">Selected Date is: @StartDate</MudText>
+
+@code
+{
+    private DateTime? StartDate;
+}

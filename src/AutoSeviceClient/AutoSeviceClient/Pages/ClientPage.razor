@@ -1,0 +1,191 @@
+﻿@page "/client"
+@using AutoSeviceClient.Models
+@using AutoSeviceClient.Pages.Dialog
+@using InputType = MudBlazor.InputType
+@inject IDialogService DialogService
+<h3>Клиенты</h3>
+
+@if (_errorAllert)
+{
+<MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center" ShowCloseIcon="true" CloseIconClicked="(() => _errorAllert=false)">@_allertText</MudAlert>}
+
+@if (_clients.Any())
+{
+
+<MudTable Items="@_clients" Hover="true" Loading="@_isLoading" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>ID</MudTh>
+        <MudTh>ФИО</MudTh>
+        <MudTh>Машина</MudTh>
+        <MudTh>Номер машины</MudTh>
+        <MudTh>Способ связи</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="ID">@context.Id</MudTd>
+        <MudTd DataLabel="ФИО">@string.Join(" ", context.LastName, context.Name, context.Patronymics)</MudTd>
+        <MudTd DataLabel="Машина">@context.AutoType</MudTd>
+        <MudTd DataLabel="Номер машины">@context.AutoNumber</MudTd>
+        <MudTd DataLabel="Способ связи">@GetPreferCommunicationType(context)</MudTd>
+    </RowTemplate>
+</MudTable> }
+else
+{
+<MudPaper Class="d-flex justify-center py-2 px-1 mt-6">
+    <MudItem>
+        <MudText Align="Align.Center" Style="padding-bottom: 5px;">Не найдено клиентов! </MudText>
+        <MudText Align="Align.Center" Style="padding-bottom: 15px;">Добавить?</MudText>
+        <MudButton Variant="Variant.Filled" OnClick="NewClient" Color="Color.Primary">Добавить клиента</MudButton>
+    </MudItem>
+</MudPaper>}
+
+<MudDialog  @bind-IsVisible="_dialogClientView" Options="dialogOptions"  >
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            @GetHeaderText()
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="_form" @bind-IsValid="@_success" @bind-Errors="@_errors" >
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField T="string" @bind-Value="_selectedClient.LastName" HelperText="Фамилия клиента" Immediate="true" Label="Фамилия" Variant="Variant.Text" Required="true" RequiredError="Не введены данные!" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField T="string" @bind-Value="_selectedClient.Name" HelperText="Имя клиента" Immediate="true" Label="Имя" Variant="Variant.Text" Required="true" InputType="InputType.Telephone" RequiredError="Не введены данные!" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField T="string" @bind-Value="_selectedClient.Patronymics" HelperText="Отчество клиента" Immediate="true" Label="Отчество" Required="true" Variant="Variant.Text" RequiredError="Не введены данные!" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDatePicker Label="Дата рождения" @bind-Date="_selectedClient.BirthDay" ShowWeekNumbers="true" Required="true" HelperText="Дата рождения клиента" RequiredError="Не введены данные!" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudSelect T="string" @bind-Value="_selectedClient.PreferCommunicationType" HelperText="Предпочитаемый способ связи" Immediate="true" Required="true" Label="Предпочитаемый способ связи для клиента" RequiredError="Не выбраны данные!" Variant="Variant.Text">
+                        <MudSelectItem Value="@("Телефон")" />
+                        <MudSelectItem Value="@("E-Mail")" />
+                    </MudSelect>
+                </MudItem>
+
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="() => _dialogClientView=false" ButtonType="ButtonType.Reset" Class="ml-auto">Отмена</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit" Disabled="@(!_success)" Class="ml-auto">Сохранить</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<MudDialog @bind-IsVisible="_dialogClientView" Options="dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3"/> Edit rating
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <p>How awesome are inline dialogs?</p>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit" Class="px-10">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code
+{ 
+    #region Allert
+
+    private bool _errorAllert;
+    private string _allertText;
+
+    private void ErrorEvent(string message)
+    {
+        _errorAllert = true;
+        _allertText = $"{message} Для исправления рекомендуем повторить операцию!";
+    }
+
+    #endregion
+
+    #region Client Info Dialog
+    private bool _success;
+    private string[] _errors = { };
+    private MudForm _form;
+
+    private Client _selectedClient;
+
+    #endregion
+
+    private IList<Client> _clients;
+
+
+
+    private bool _isLoading;
+    private bool _dialogClientView;
+
+    private bool _isEdit;
+
+
+    private DialogOptions dialogOptions = new() { FullWidth = true, FullScreen = true,DisableBackdropClick = true };
+
+    /// <inheritdoc />
+    protected override async Task OnInitializedAsync()
+    {
+        //_mbox = new MudMessageBox();
+        _dialogClientView = false;
+        await LoadContent();
+    }
+
+
+    private async Task LoadContent()
+    {
+        _clients = new List<Client>();
+        _isLoading = false;
+        try
+        {
+            throw new Exception("Ytr");
+        }
+        catch (Exception e)
+        {
+            ErrorEvent($"При получении клиентов произошла ошибка [{e.Message}]");
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private string GetPreferCommunicationType(Client client)
+    {
+        if (string.IsNullOrEmpty(client.PreferCommunicationType))
+            return client.PhoneNumber;
+        if (client.PreferCommunicationType.Equals("E-Mail"))
+            return client.Email;
+        return client.PhoneNumber;
+    }
+
+    private void NewClient()
+    {
+        _selectedClient = new Client();
+        _isEdit = false;
+        _dialogClientView = true;
+    }
+
+    private async Task Submit()
+    {
+        await Task.Delay(TimeSpan.FromSeconds(8));
+        _clients.Add(new Client());
+        _dialogClientView = false;
+    }
+
+
+    private string GetHeaderText()
+    {
+        if (_isEdit)
+            return "Редактирование";
+        return "Создание";
+    }
+}

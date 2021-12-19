@@ -4,7 +4,7 @@ import com.genderfrender.autoServiceApi.entities.Part;
 
 public class PartForUser
 {
-	private P	art part;
+	private Part part;
 	private int countOfUse;
 
 	public PartForUser()
