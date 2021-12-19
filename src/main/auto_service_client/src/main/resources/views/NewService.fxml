@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="271.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="autoService.controller.NewServiceController">
+   <children>
+      <VBox alignment="CENTER" layoutX="52.0" layoutY="58.0" prefHeight="335.0" prefWidth="360.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="56.0" prefWidth="660.0" text="Добавление услуги" />
+            <TextField fx:id="serviceName" prefHeight="42.0" prefWidth="360.0" promptText="Тип">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></TextField>
+            <TextField fx:id="type" layoutX="10.0" layoutY="137.0" prefHeight="42.0" prefWidth="360.0" promptText="Название">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></TextField>
+            <TextField fx:id="length" layoutX="10.0" layoutY="180.0" prefHeight="42.0" prefWidth="360.0" promptText="Длительность">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></TextField>
+            <Button mnemonicParsing="false" onAction="#create" prefHeight="55.0" prefWidth="348.0" text="Создать">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
